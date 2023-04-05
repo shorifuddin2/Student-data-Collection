@@ -1,30 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import useEdit from '../../hooks/useEdit';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
-const CreateUser = () => {
+const Edit = () => {
+    const { id } = useParams();
     const [value, onChange] = useState(new Date());
-    const { register, handleSubmit } = useForm();
-    const onSubmit = (data,event) => {
-        const url = `http://localhost:5000/users`;
-        console.log(url)
-        fetch(url,{
-            method : 'POST',
-            headers : {
-                'content-type' : 'application/json'
+    const [edit, setEdit] = useEdit()
+    const { register, handleSubmit } = useForm()
+    const onSubmit = data => {
+        const users = {
+            name: data.name,
+            job: data.job,
+            number: data.number,
+            photo: data.photo,
+        }
+        console.log(data)
+        fetch(`http://localhost:5000/users/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(users)
         })
-        .then(res => res.json())
-        .then (result =>{
-            console.log(result)
-            alert('Student added successfully',result);
-            event.target.reset()
-        })
+            .then(res => res.json())
+            .then(data => {
+                alert('updated successfully')
+                console.log(data)
+            })
     }
+    const [isReload] = useState(false)
+    useEffect(() => {
+        const url = `http://localhost:5000/users/${id}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setEdit(data))
+    }, [isReload])
     return (
         <div>
             <section class=" py-1 bg-blueGray-50">
@@ -35,7 +50,7 @@ const CreateUser = () => {
             <h6 class="text-blueGray-700 text-xl font-bold">
                                     Create Data</h6>
                                 <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                <DateTimePicker onChange={onChange} value={value} />
+                                    <DateTimePicker onChange={onChange} value={value} />
                                 </button>
                             </div>
                         </div>
@@ -83,4 +98,4 @@ const CreateUser = () => {
     );
 };
 
-export default CreateUser;
+export default Edit;

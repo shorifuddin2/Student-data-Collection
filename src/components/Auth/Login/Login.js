@@ -8,6 +8,7 @@ import "../styles/Login.css";
 
 
 const Login = () => {
+    
     const [userInfo, setUserInfo] = useState({
         email: "",
         password: "",
@@ -88,7 +89,7 @@ const Login = () => {
     }, [hookError, googleError])
 
     return (
-        <div className="login-container mt-80">
+        <div className="login-container ">
             <div className="login-title ">LOGIN</div>
             <form className="login-form" onSubmit={handleLogin}>
                 <input type="text" placeholder="Your Email" onChange={handleEmailChange} />
@@ -104,7 +105,7 @@ const Login = () => {
                 <p>Don't have an account? <Link to="/signup">Sign up first</Link> </p>
             </form>
 
-            <button onClick={() => signInWithGoogle()}>Google</button>
+            <button onClick={() => signInWithGoogle().then(()=>{navigate("/")})}>Google</button>
         </div>
     );
 };

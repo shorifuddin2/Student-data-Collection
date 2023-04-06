@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import useEdit from '../../hooks/useEdit';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import UseEdited from '../../hooks/UseEdited';
 
 const Edit = () => {
-    const { id } = useParams();
     const [value, onChange] = useState(new Date());
-    const [edit, setEdit] = useEdit()
+    const { id } = useParams();
+    const [edit, setEdit] = UseEdited(id)
     const { register, handleSubmit } = useForm()
     const onSubmit = data => {
         const users = {
@@ -33,13 +33,13 @@ const Edit = () => {
                 console.log(data)
             })
     }
-    const [isReload] = useState(false)
+    const [_id] = useState(false)
     useEffect(() => {
         const url = `http://localhost:5000/users/${id}`
         fetch(url)
             .then(res => res.json())
             .then(data => setEdit(data))
-    }, [isReload])
+    }, [_id])
     return (
         <div>
             <section class=" py-1 bg-blueGray-50">
@@ -62,19 +62,19 @@ const Edit = () => {
                                 <div class="flex">
                                     <div class="w-full lg:w-6/12 px-4">
                                         <div class="relative w-full mb-3">
-                                            <input type="text" class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Name' {...register("name", {
+                                            <input type="text" defaultValue={edit.name}class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Name' {...register("name", {
                                             })} />
                                         </div>
                                     </div>
                                     <div class="w-full lg:w-6/12 px-4">
                                         <div class="relative w-full mb-3">
-                                            <input type="text" class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Job Post' {...register("job", {
+                                            <input type="text" defaultValue={edit.job}class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Job Post' {...register("job", {
                                             })} />
                                         </div>
                                     </div>
                                     <div class="w-full lg:w-6/12 px-4">
                                         <div class="relative w-full mb-3">
-                                            <input type="text" class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Phone Number' {...register("number", {
+                                            <input type="text" defaultValue={edit.phone}class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Phone Number' {...register("number", {
                                             })} />
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@ const Edit = () => {
                                 
                                 <div class="w-full lg:w-6/12 px-4">
                                         <div class="relative w-full mb-3">
-                                            <input type="text" class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Input Image Url' {...register("photo", {
+                                            <input type="text" defaultValue={edit.photo} class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder='Input Image Url' {...register("photo", {
                                             })} />
                                         </div>
                                     </div>

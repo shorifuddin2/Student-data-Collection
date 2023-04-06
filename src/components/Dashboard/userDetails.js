@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const userDetails = ({user,handleDelate}) => {
-    const{_id, name,job,number,photo}=user
+    const{_id, name,job,number,photo} = user
     return (
         <div>
              <tr>

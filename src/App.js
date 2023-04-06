@@ -1,37 +1,35 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Login from './components/Auth/Login/Login';
-import Signup from './components/Auth/Signup/Signup'
-import RequireAuth from './components/Auth/RequireAuth/RequireAuth';
-import CreateUser from './components/CreateUser/CreateUser';
-import Home from './components/Home/Home';
-import Navbar from './components/Navbar/Navbar';
-import Edit from './components/Dashboard/Edit';
 
-const App = () => {
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import Dashboard from './Component/DashBoard/Dashboard';
+import Home from './Component/Home';
+import Nav from './Component/Nav';
+import SignUp from './Component/SignUp';
+import AllStudent from './Component/DashBoard/AllStudent';
+import AddStudent from './Component/DashBoard/AddStudent';
+import View from './Component/DashBoard/View';
+import Edit from './Component/DashBoard/Edit';
+
+function App() {
   return (
-    <div>
-      <Navbar/>
-<Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/home"element={<Home/>}/>
-                <Route path="/edit/:id" element={
-                  <RequireAuth>
-                    <Edit />
-                  </RequireAuth>
-                }/>
-                
-                <Route path="/createUser" element={
-                  <RequireAuth>
-                    <CreateUser />
-                  </RequireAuth>
-                } />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-            
-            </Routes>
+    <div className="App">
+      <Nav></Nav>
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/home" element={<Home></Home>}></Route>
+        <Route path="/sign" element={<SignUp></SignUp>}></Route>
+        <Route path="/view/:id" element={<View></View>}></Route>
+        <Route path="/edit/:id" element={<Edit></Edit>}></Route>
+        <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+        <Route index element={<AllStudent></AllStudent>}></Route>
+          <Route path="all" element={<AllStudent></AllStudent>}></Route>
+          <Route path="add" element={<AddStudent></AddStudent>}></Route>
+        </Route>
+        
+        
+      </Routes>
     </div>
   );
-};
+}
 
 export default App;

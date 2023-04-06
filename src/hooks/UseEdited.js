@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const UseEdited = id => {
+const UseEdited =(id) => {
     const [edit,setEdit] = useState({})
     useEffect(()=>{
         const url = `http://localhost:3000/users/${id}`

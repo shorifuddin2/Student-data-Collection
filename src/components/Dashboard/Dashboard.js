@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useUsers from '../../hooks/UseUsers';
-import userDetails from './userDetails';
+// import userDetails from './userDetails';
 
 
-const Dashboard = (_id) => {
-    
+
+const Dashboard = (user) => {
+    const {_id} = user
+    // const {_id} = userDetails()
     const [users, setUsers]= useUsers()
     
     const handleDelate = id =>{
